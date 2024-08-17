@@ -2,6 +2,8 @@ import pygame
 from vaisseau import Vaisseau
 from ennemi import Ennemi
 from background import Background
+from bouclier import Bouclier
+import random
 
 # Initialisation de Pygame
 pygame.init()
@@ -27,6 +29,11 @@ tous_les_sprites = pygame.sprite.Group(vaisseau)
 ennemi_group = pygame.sprite.Group()
 temps_nouvel_ennemi = 600
 temps_depart_ennemi = pygame.time.get_ticks()
+
+# Bouclier
+bouclier_group = pygame.sprite.Group()
+temps_nouveau_bouclier = random.randint(1000, 3000)
+temps_depart_bouclier = pygame.time.get_ticks()
 
 running = True
 while running:
@@ -61,6 +68,14 @@ while running:
         ennemi_group.add(ennemi)
         tous_les_sprites.add(ennemi)
         temps_depart_ennemi = current_time
+
+    # Génère un bouclier aléatoirement entre 1 et 10 secondes 
+    current_time = pygame.time.get_ticks()
+    if current_time - temps_depart_bouclier > temps_nouveau_bouclier:
+        bouclier = Bouclier(largeur_ecran, hauteur_ecran)
+        bouclier_group.add(bouclier)
+        tous_les_sprites.add(bouclier)
+        temps_depart_bouclier = current_time
 
     # Collision Missile / Ennemi
     for missile in vaisseau.missiles:
