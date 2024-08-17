@@ -15,7 +15,7 @@ class Vaisseau(pygame.sprite.Sprite):
         self.missiles = pygame.sprite.Group()
 
         self.missile_ready = True
-        self.temps_reload_missile = 300
+        self.temps_reload_missile = 100
         self.temps_depart_missile = 0
 
     def handle_mouvement(self, keys, largeur_ecran, hauteur_ecran):

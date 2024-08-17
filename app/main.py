@@ -16,7 +16,7 @@ pygame.display.set_caption("Space Invaders II")
 # Background
 background_group = pygame.sprite.Group()
 background_ready = True
-temps_nouveau_background = 100
+temps_nouveau_background = 300
 temps_depart_background = 0
 
 # Vaisseau
@@ -76,7 +76,7 @@ while running:
     tous_les_sprites.update()
 
     # Affichage
-    ecran.fill("GREY")
+    ecran.fill("#222023")
     tous_les_sprites.draw(ecran)
     vaisseau.draw(ecran)
     pygame.display.update()
