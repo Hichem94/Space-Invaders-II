@@ -11,21 +11,20 @@ class Vaisseau(pygame.sprite.Sprite):
         self.image.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.image.get_rect()
 
+        # Missile
         self.speed = 15
         self.missiles = pygame.sprite.Group()
-
         self.missile_ready = True
         self.temps_reload_missile = 100
         self.temps_depart_missile = 0
 
-
-        # self.bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()
-        # self.bouclier_image = pygame.transform.scale(self.bouclier_image, (80, 70))
-        # self.bouclier_image.set_colorkey((255, 255, 255), RLEACCEL)
-        # self.bouclier_rect = self.bouclier_image.get_rect()
+        # Bouclier
         self.bouclier_active = False
         self.bouclier_duree = 6000
         self.bouclier_consume = 0
+
+        # Vie
+        self.vies = 1
         
 
     def handle_mouvement(self, keys, largeur_ecran, hauteur_ecran):
@@ -81,6 +80,15 @@ class Vaisseau(pygame.sprite.Sprite):
             if current_time - self.bouclier_consume >= self.bouclier_duree:
                 self.bouclier_active = False
 
+
+    def add_vie(self):
+        self.vies += 1
+
+    def remove_vie(self):
+        self.vies -= 1
+    
+    def get_vies(self):
+        return self.vies
 
     def draw(self, ecran):
         # Dessiner les missiles

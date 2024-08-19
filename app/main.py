@@ -4,25 +4,31 @@ from ennemi import Ennemi
 from background import Background
 from bouclier import Bouclier
 from explosion import Explosion
+from vie import Vie
+from vie_score import Vie_Score
 import random
 
 # Initialisation de Pygame
 pygame.init()
 
-# Initialiser le module de police
-pygame.font.init()
-font = pygame.font.SysFont('Comic Sans MS', 36)
-score = 0
-# Définir les couleurs
-WHITE = (255, 255, 255)
-
-clock = pygame.time.Clock()
 
 # Dimensions de la fenêtre
 largeur_ecran, hauteur_ecran = 1000, 800
 zone_interdite = 50
 ecran = pygame.display.set_mode((largeur_ecran, hauteur_ecran))
 pygame.display.set_caption("Space Invaders II")
+
+
+# Initialiser le module de police
+pygame.font.init()
+font = pygame.font.SysFont('Comic Sans MS', 36)
+score = 0
+
+
+# Définir les couleurs
+WHITE = (255, 255, 255)
+
+clock = pygame.time.Clock()
 
 
 # Background
@@ -45,7 +51,18 @@ bouclier_group = pygame.sprite.Group()
 temps_nouveau_bouclier = random.randint(1000, 3000)
 temps_depart_bouclier = pygame.time.get_ticks()
 
+# Vie
+vie_group = pygame.sprite.Group()
+temps_nouvelle_vie = random.randint(1000, 3000)
+temps_depart_vie = pygame.time.get_ticks()
 
+# Vie score
+# vie_score = Vie_Score(largeur_ecran)
+# tous_les_sprites.add(vie_score)
+
+
+
+# Boucle principale
 running = True
 while running:
     clock.tick(30)  # Limite le FPS à 60
@@ -53,6 +70,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    # Maj du score des vies
+    # print(vie_score.compteur_vie)
+    # vie_score.maj_cpt_vie(vaisseau.get_vies())
 
     # Gestion du background
     current_time = pygame.time.get_ticks()
@@ -86,6 +107,14 @@ while running:
         bouclier_group.add(bouclier)
         tous_les_sprites.add(bouclier)
         temps_depart_bouclier = current_time
+    
+    # Génère une vie aléatoirement entre 1 et 10 secondes
+    current_time = pygame.time.get_ticks()
+    if current_time - temps_depart_vie > temps_nouvelle_vie:
+        vie = Vie(zone_interdite, largeur_ecran, hauteur_ecran)
+        vie_group.add(vie)
+        tous_les_sprites.add(vie)
+        temps_depart_vie = current_time
 
     # Collision Missile / Ennemi
     for missile in vaisseau.missiles:
@@ -99,7 +128,9 @@ while running:
 
     # Collision Vaisseau / Ennemi
     if pygame.sprite.spritecollide(vaisseau, ennemi_group, False) and not vaisseau.bouclier_active:
-        running = False  # Termine le jeu si le vaisseau touche un ennemi
+        vaisseau.remove_vie()
+        if not vaisseau.get_vies():
+            running = False  # Termine le jeu si le vaisseau touche un ennemi
 
     # Collision Vaisseau+Bouclier / Ennemi
     if pygame.sprite.spritecollide(vaisseau, ennemi_group, True) and vaisseau.bouclier_active:
@@ -108,12 +139,17 @@ while running:
     # Collision Vaisseau / Bouclier
     if pygame.sprite.spritecollide(vaisseau, bouclier_group, True):
         vaisseau.armor()
+    
+    # Collision Vaisseau / Vie
+    if pygame.sprite.spritecollide(vaisseau, vie_group, False):
+        vaisseau.add_vie()
+
 
     # Met à jour tous les sprites
     tous_les_sprites.update()
 
     # Affichage
-    ecran.fill("#222023")
+    ecran.fill("#222023") # Couleur de fond
     tous_les_sprites.draw(ecran)
     vaisseau.draw(ecran)
     
@@ -123,6 +159,7 @@ while running:
 
     # Blit le texte du score en haut à gauche
     ecran.blit(score_text, (largeur_ecran-150, 10))
+
     pygame.display.update()
 
 #pygame.time.delay(2000)
