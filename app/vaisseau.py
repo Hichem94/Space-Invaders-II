@@ -19,10 +19,10 @@ class Vaisseau(pygame.sprite.Sprite):
         self.temps_depart_missile = 0
 
 
-        self.bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()
-        self.bouclier_image = pygame.transform.scale(self.bouclier_image, (80, 70))
-        self.bouclier_image.set_colorkey((255, 255, 255), RLEACCEL)
-        self.bouclier_rect = self.bouclier_image.get_rect()
+        # self.bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()
+        # self.bouclier_image = pygame.transform.scale(self.bouclier_image, (80, 70))
+        # self.bouclier_image.set_colorkey((255, 255, 255), RLEACCEL)
+        # self.bouclier_rect = self.bouclier_image.get_rect()
         self.bouclier_active = False
         self.bouclier_duree = 6000
         self.bouclier_consume = 0
@@ -88,8 +88,13 @@ class Vaisseau(pygame.sprite.Sprite):
         self.missiles.draw(ecran)
         # Dessiner le bouclier autour du vaisseau s'il est actif
         if self.bouclier_active:
-            self.bouclier_rect.center = self.rect.center
-            ecran.blit(self.bouclier_image, self.bouclier_rect)
+            bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()
+            bouclier_image = pygame.transform.scale(bouclier_image, (80, 70))
+            bouclier_image.set_colorkey((255, 255, 255), RLEACCEL)
+            bouclier_rect = bouclier_image.get_rect()
+            bouclier_rect.center = self.rect.center
+            ecran.blit(bouclier_image, bouclier_rect)
+            
 
         
             

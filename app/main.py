@@ -3,11 +3,18 @@ from vaisseau import Vaisseau
 from ennemi import Ennemi
 from background import Background
 from bouclier import Bouclier
+from score import Score
 import random
 
 # Initialisation de Pygame
 pygame.init()
 
+# Initialiser le module de police
+pygame.font.init()
+font = pygame.font.SysFont('Comic Sans MS', 36)
+score = 0
+# Définir les couleurs
+WHITE = (255, 255, 255)
 
 clock = pygame.time.Clock()
 
@@ -37,6 +44,7 @@ bouclier_group = pygame.sprite.Group()
 temps_nouveau_bouclier = random.randint(1000, 3000)
 temps_depart_bouclier = pygame.time.get_ticks()
 
+
 running = True
 while running:
     clock.tick(30)  # Limite le FPS à 60
@@ -44,9 +52,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    # Blit le texte à sa position
-    ecran.blit(text, text_rect)
 
     # Gestion du background
     current_time = pygame.time.get_ticks()
@@ -85,6 +90,7 @@ while running:
     for missile in vaisseau.missiles:
         ennemis_touches = pygame.sprite.spritecollide(missile, ennemi_group, True)
         if ennemis_touches:
+            score += len(ennemis_touches)
             missile.kill()
 
     # Collision Vaisseau / Ennemi
@@ -106,9 +112,14 @@ while running:
     ecran.fill("#222023")
     tous_les_sprites.draw(ecran)
     vaisseau.draw(ecran)
+    
+
+    # Créer le texte du score
+    score_text = font.render(f"Score: {score}", True, WHITE)
+
+    # Blit le texte du score en haut à gauche
+    ecran.blit(score_text, (10, 10))
     pygame.display.update()
-
-    # Mettre à jour l'écran
-    pygame.display.flip()
-
+    
+pygame.time.delay(2000)
 pygame.quit()
