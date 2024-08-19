@@ -5,6 +5,7 @@ from background import Background
 from bouclier import Bouclier
 from explosion import Explosion
 from vie import Vie
+from menu import menu
 import random
 
 # Initialisation de Pygame
@@ -54,6 +55,8 @@ temps_depart_bouclier = pygame.time.get_ticks()
 vie_group = pygame.sprite.Group()
 temps_nouvelle_vie = random.randint(1000, 3000)
 temps_depart_vie = pygame.time.get_ticks()
+
+menu(ecran, largeur_ecran, hauteur_ecran)
 
 # Boucle principale
 running = True
@@ -163,5 +166,5 @@ while running:
 
     pygame.display.update()
 
-#pygame.time.delay(2000)
+pygame.time.delay(1000)
 pygame.quit()
