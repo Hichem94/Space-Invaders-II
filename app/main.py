@@ -55,7 +55,6 @@ vie_group = pygame.sprite.Group()
 temps_nouvelle_vie = random.randint(1000, 3000)
 temps_depart_vie = pygame.time.get_ticks()
 
-
 # Boucle principale
 running = True
 while running:
@@ -120,12 +119,20 @@ while running:
             score += len(ennemis_touches)
             missile.kill()
 
-
     # Collision Vaisseau / Ennemi
-    if pygame.sprite.spritecollide(vaisseau, ennemi_group, False) and not vaisseau.bouclier_active:
-        vaisseau.remove_vie()
+    ennemis_touches = pygame.sprite.spritecollide(vaisseau, ennemi_group, False)
+    for ennemi in ennemis_touches:
+        explosion1 = Explosion(ennemi.rect.center)
+        tous_les_sprites.add(explosion1)
+        score += len(ennemis_touches)
+        ennemi.kill()
+        if not vaisseau.bouclier_active:
+            vaisseau.remove_vie()
         if not vaisseau.get_vies():
+            explosion2 = Explosion(vaisseau.rect.center)
+            tous_les_sprites.add(explosion2)
             running = False  # Termine le jeu si le vaisseau touche un ennemi
+
 
     # Collision Vaisseau+Bouclier / Ennemi
     if pygame.sprite.spritecollide(vaisseau, ennemi_group, True) and vaisseau.bouclier_active:
@@ -156,5 +163,5 @@ while running:
 
     pygame.display.update()
 
-pygame.time.delay(2000)
+#pygame.time.delay(2000)
 pygame.quit()
