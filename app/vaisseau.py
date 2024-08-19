@@ -1,7 +1,7 @@
 import pygame
 from pygame import *
 from missile import Missile
-
+from vie import Vie
 
 class Vaisseau(pygame.sprite.Sprite):
     def __init__(self):
@@ -25,6 +25,12 @@ class Vaisseau(pygame.sprite.Sprite):
 
         # Vie
         self.vies = 1
+        #self.vie  = Vie(0,0,0)
+
+        # Vie score
+        self.depart = 1000/2
+        self.liste_vie = []
+        self.groupe_vie = pygame.sprite.Group()
         
 
     def handle_mouvement(self, keys, largeur_ecran, hauteur_ecran):
@@ -90,10 +96,28 @@ class Vaisseau(pygame.sprite.Sprite):
     def get_vies(self):
         return self.vies
 
+    def gestion_vies_score(self):
+        print('len(liste_vie) = {} et self.vies = {}'.format(len(self.liste_vie), self.vies))
+        if len(self.liste_vie) < self.vies:
+            vie = Vie(0,0,0)
+            vie.image = pygame.transform.scale(vie.image, (20, 20))
+            vie.rect = (self.depart, 10)
+            self.liste_vie.append(vie)
+            self.groupe_vie.add(vie)
+            self.depart += 20
+        
+        if len(self.liste_vie) > self.vies:
+            vie = self.liste_vie[len(self.liste_vie)-1]
+            self.liste_vie.pop()
+            self.groupe_vie.remove(vie)
+            vie.kill()
+            self.depart -= 20
+
     def draw(self, ecran):
         # Dessiner les missiles
         #ecran.blit(self.image, self.rect)
         self.missiles.draw(ecran)
+        self.groupe_vie.draw(ecran)
         # Dessiner le bouclier autour du vaisseau s'il est actif
         if self.bouclier_active:
             bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()

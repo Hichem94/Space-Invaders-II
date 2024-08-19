@@ -5,7 +5,6 @@ from background import Background
 from bouclier import Bouclier
 from explosion import Explosion
 from vie import Vie
-from vie_score import Vie_Score
 import random
 
 # Initialisation de Pygame
@@ -56,11 +55,6 @@ vie_group = pygame.sprite.Group()
 temps_nouvelle_vie = random.randint(1000, 3000)
 temps_depart_vie = pygame.time.get_ticks()
 
-# Vie score
-# vie_score = Vie_Score(largeur_ecran)
-# tous_les_sprites.add(vie_score)
-
-
 
 # Boucle principale
 running = True
@@ -74,6 +68,7 @@ while running:
     # Maj du score des vies
     # print(vie_score.compteur_vie)
     # vie_score.maj_cpt_vie(vaisseau.get_vies())
+    vaisseau.gestion_vies_score()
 
     # Gestion du background
     current_time = pygame.time.get_ticks()
@@ -141,7 +136,7 @@ while running:
         vaisseau.armor()
     
     # Collision Vaisseau / Vie
-    if pygame.sprite.spritecollide(vaisseau, vie_group, False):
+    if pygame.sprite.spritecollide(vaisseau, vie_group, True):
         vaisseau.add_vie()
 
 
@@ -151,8 +146,7 @@ while running:
     # Affichage
     ecran.fill("#222023") # Couleur de fond
     tous_les_sprites.draw(ecran)
-    vaisseau.draw(ecran)
-    
+    vaisseau.draw(ecran)    
 
     # Créer le texte du score
     score_text = font.render(f"Score: {score}", True, WHITE)
@@ -162,5 +156,5 @@ while running:
 
     pygame.display.update()
 
-#pygame.time.delay(2000)
+pygame.time.delay(2000)
 pygame.quit()
