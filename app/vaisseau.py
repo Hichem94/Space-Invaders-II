@@ -44,14 +44,15 @@ class Vaisseau(pygame.sprite.Sprite):
             self.rect.x -= 15
         
         # Le vaisseau reste dans l'écran
+        zone_interdite = 15
         if self.rect.left < 0:
             self.rect.left = 0
         if self.rect.right > largeur_ecran:
             self.rect.right = largeur_ecran
-        if self.rect.top <= 0:
-            self.rect.top = 0
+        if self.rect.top <= zone_interdite:
+            self.rect.top = zone_interdite
         if self.rect.bottom >= hauteur_ecran:
-            self.rect.bottom = hauteur_ecran
+            self.rect.bottom = hauteur_ecran-zone_interdite
 
 
     def update(self):
@@ -97,7 +98,7 @@ class Vaisseau(pygame.sprite.Sprite):
         return self.vies
 
     def gestion_vies_score(self):
-        print('len(liste_vie) = {} et self.vies = {}'.format(len(self.liste_vie), self.vies))
+        #print('len(liste_vie) = {} et self.vies = {}'.format(len(self.liste_vie), self.vies))
         if len(self.liste_vie) < self.vies:
             vie = Vie(0,0,0)
             vie.image = pygame.transform.scale(vie.image, (20, 20))
