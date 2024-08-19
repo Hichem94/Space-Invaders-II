@@ -3,7 +3,6 @@ from vaisseau import Vaisseau
 from ennemi import Ennemi
 from background import Background
 from bouclier import Bouclier
-from score import Score
 import random
 
 # Initialisation de Pygame
@@ -19,7 +18,8 @@ WHITE = (255, 255, 255)
 clock = pygame.time.Clock()
 
 # Dimensions de la fenêtre
-largeur_ecran, hauteur_ecran = 800, 600
+largeur_ecran, hauteur_ecran = 1000, 800
+zone_interdite = 50
 ecran = pygame.display.set_mode((largeur_ecran, hauteur_ecran))
 pygame.display.set_caption("Space Invaders II")
 
@@ -73,7 +73,7 @@ while running:
     # Génère un ennemi toutes les 0.6 secondes
     current_time = pygame.time.get_ticks()
     if current_time - temps_depart_ennemi > temps_nouvel_ennemi:
-        ennemi = Ennemi(largeur_ecran, hauteur_ecran)
+        ennemi = Ennemi(zone_interdite, largeur_ecran, hauteur_ecran-zone_interdite)
         ennemi_group.add(ennemi)
         tous_les_sprites.add(ennemi)
         temps_depart_ennemi = current_time
@@ -81,7 +81,7 @@ while running:
     # Génère un bouclier aléatoirement entre 1 et 10 secondes 
     current_time = pygame.time.get_ticks()
     if current_time - temps_depart_bouclier > temps_nouveau_bouclier:
-        bouclier = Bouclier(largeur_ecran, hauteur_ecran)
+        bouclier = Bouclier(zone_interdite, largeur_ecran, hauteur_ecran)
         bouclier_group.add(bouclier)
         tous_les_sprites.add(bouclier)
         temps_depart_bouclier = current_time
@@ -118,8 +118,8 @@ while running:
     score_text = font.render(f"Score: {score}", True, WHITE)
 
     # Blit le texte du score en haut à gauche
-    ecran.blit(score_text, (10, 10))
+    ecran.blit(score_text, (largeur_ecran-150, 10))
     pygame.display.update()
-    
-pygame.time.delay(2000)
+
+#pygame.time.delay(2000)
 pygame.quit()
