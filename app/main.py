@@ -3,6 +3,7 @@ from vaisseau import Vaisseau
 from ennemi import Ennemi
 from background import Background
 from bouclier import Bouclier
+from explosion import Explosion
 import random
 
 # Initialisation de Pygame
@@ -90,8 +91,11 @@ while running:
     for missile in vaisseau.missiles:
         ennemis_touches = pygame.sprite.spritecollide(missile, ennemi_group, True)
         if ennemis_touches:
+            explosion = Explosion(missile.rect.center)
+            tous_les_sprites.add(explosion)
             score += len(ennemis_touches)
             missile.kill()
+
 
     # Collision Vaisseau / Ennemi
     if pygame.sprite.spritecollide(vaisseau, ennemi_group, False) and not vaisseau.bouclier_active:
