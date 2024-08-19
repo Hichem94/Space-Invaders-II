@@ -8,12 +8,14 @@ import random
 # Initialisation de Pygame
 pygame.init()
 
+
 clock = pygame.time.Clock()
 
 # Dimensions de la fenêtre
 largeur_ecran, hauteur_ecran = 800, 600
 ecran = pygame.display.set_mode((largeur_ecran, hauteur_ecran))
 pygame.display.set_caption("Space Invaders II")
+
 
 # Background
 background_group = pygame.sprite.Group()
@@ -43,7 +45,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    
+    # Blit le texte à sa position
+    ecran.blit(text, text_rect)
+
     # Gestion du background
     current_time = pygame.time.get_ticks()
     if current_time - temps_depart_background > temps_nouveau_background:
@@ -84,8 +88,16 @@ while running:
             missile.kill()
 
     # Collision Vaisseau / Ennemi
-    if pygame.sprite.spritecollide(vaisseau, ennemi_group, False):
+    if pygame.sprite.spritecollide(vaisseau, ennemi_group, False) and not vaisseau.bouclier_active:
         running = False  # Termine le jeu si le vaisseau touche un ennemi
+
+    # Collision Vaisseau+Bouclier / Ennemi
+    if pygame.sprite.spritecollide(vaisseau, ennemi_group, True) and vaisseau.bouclier_active:
+        pass
+
+    # Collision Vaisseau / Bouclier
+    if pygame.sprite.spritecollide(vaisseau, bouclier_group, True):
+        vaisseau.armor()
 
     # Met à jour tous les sprites
     tous_les_sprites.update()
@@ -95,5 +107,8 @@ while running:
     tous_les_sprites.draw(ecran)
     vaisseau.draw(ecran)
     pygame.display.update()
+
+    # Mettre à jour l'écran
+    pygame.display.flip()
 
 pygame.quit()

@@ -18,6 +18,16 @@ class Vaisseau(pygame.sprite.Sprite):
         self.temps_reload_missile = 100
         self.temps_depart_missile = 0
 
+
+        self.bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()
+        self.bouclier_image = pygame.transform.scale(self.bouclier_image, (80, 70))
+        self.bouclier_image.set_colorkey((255, 255, 255), RLEACCEL)
+        self.bouclier_rect = self.bouclier_image.get_rect()
+        self.bouclier_active = False
+        self.bouclier_duree = 6000
+        self.bouclier_consume = 0
+        
+
     def handle_mouvement(self, keys, largeur_ecran, hauteur_ecran):
         if keys[K_UP]:
             self.rect.y -= 15
@@ -42,6 +52,7 @@ class Vaisseau(pygame.sprite.Sprite):
     def update(self):
         self.missiles.update()
         self.reload_missile()
+        self.check_armor()
 
     def shoot_missile(self, largeur_ecran):
         if self.missile_ready:
@@ -56,6 +67,29 @@ class Vaisseau(pygame.sprite.Sprite):
             if current_time - self.temps_depart_missile >= self.temps_reload_missile:
                 self.missile_ready = True
 
-    def draw(self, win):
-        #win.blit(self.image, self.rect)
-        self.missiles.draw(win)
+
+    def armor(self):
+        if not self.bouclier_active:
+            self.bouclier_active = True
+            self.bouclier_consume = pygame.time.get_ticks()
+        else:
+            self.bouclier_consume += self.bouclier_duree
+    
+    def check_armor(self):
+        if self.bouclier_active:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.bouclier_consume >= self.bouclier_duree:
+                self.bouclier_active = False
+
+
+    def draw(self, ecran):
+        # Dessiner les missiles
+        #ecran.blit(self.image, self.rect)
+        self.missiles.draw(ecran)
+        # Dessiner le bouclier autour du vaisseau s'il est actif
+        if self.bouclier_active:
+            self.bouclier_rect.center = self.rect.center
+            ecran.blit(self.bouclier_image, self.bouclier_rect)
+
+        
+            
