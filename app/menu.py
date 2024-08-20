@@ -3,29 +3,32 @@ import sys
 from pygame import *
 
 
+# Gestion de la police
 def gestion_texte(ecran, texte, couleur, police, taille, position):
     font = pygame.font.Font(police, taille)
     texte = font.render(texte, True, couleur)
     ecran.blit(texte, position)
 
 
-def menu(ecran, largeur_ecran, hauteur_ecran):
+def menu(ecran):
     # Définir les couleurs
     WHITE  = (255, 255, 255)
     YELLOW = (255, 255, 0)
     RED    = (255, 0, 0)
 
+    # Image du vaisseau
     vaisseau_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/vaisseau.png").convert_alpha()
     vaisseau_image = pygame.transform.scale(vaisseau_image, (300, 300))
     vaisseau_image.set_colorkey((255, 255, 255), RLEACCEL)
     vaisseau_rect = vaisseau_image.get_rect(center=(200, 420))
 
+    # Image ennemi
     ennemi_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/ennemi.png").convert_alpha()
     ennemi_image = pygame.transform.scale(ennemi_image, (200, 200))
     ennemi_image.set_colorkey((255, 255, 255), RLEACCEL)
     ennemi_rect = ennemi_image.get_rect(center=(760, 420))
     
-
+    # Boucle principale
     running = True
     while running:
         
@@ -60,11 +63,11 @@ def menu(ecran, largeur_ecran, hauteur_ecran):
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                if event.key == pygame.K_1:   # JOUER
                     running = False
-                # if event.key == pygame.K_2:
-                #     ....
-                if event.key == pygame.K_3:
+                if event.key == pygame.K_2:   # SCORE
+                    running = False
+                if event.key == pygame.K_3:   # QUITTER
                     running = False
                     pygame.quit()
                     sys.exit()                

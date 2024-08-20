@@ -56,7 +56,7 @@ vie_group = pygame.sprite.Group()
 temps_nouvelle_vie = random.randint(1000, 3000)
 temps_depart_vie = pygame.time.get_ticks()
 
-menu(ecran, largeur_ecran, hauteur_ecran)
+menu(ecran)
 
 # Boucle principale
 running = True
