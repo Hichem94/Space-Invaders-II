@@ -6,7 +6,7 @@ from bouclier import Bouclier
 from explosion import Explosion
 from vie import Vie
 from menu import menu
-from inputBox import InputBox
+import database as db
 import random
 
 # Initialisation de Pygame
@@ -57,7 +57,7 @@ vie_group = pygame.sprite.Group()
 temps_nouvelle_vie = random.randint(1000, 3000)
 temps_depart_vie = pygame.time.get_ticks()
 
-menu(ecran)
+player_pseudo = menu(ecran)
 
 # Boucle principale
 running = True
@@ -169,3 +169,5 @@ while running:
 
 pygame.time.delay(1000)
 pygame.quit()
+
+db.ajouter_player_et_score(player_pseudo, score)

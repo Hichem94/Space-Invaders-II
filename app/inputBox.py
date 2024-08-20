@@ -39,5 +39,7 @@ class InputBox(pygame.sprite.Sprite):
         self.text = new_text
         self.txt_surface = self.font.render(self.text, True, self.color)
 
+    def get_text(self):
+        return self.text
 
 

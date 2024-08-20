@@ -3,7 +3,6 @@ import sys
 from pygame import *
 from inputBox import InputBox
 
-
 # Définir les couleurs
 WHITE  = (255, 255, 255)
 YELLOW = (255, 255, 0)
@@ -36,6 +35,7 @@ def afficher_titre(ecran):
 
 def menu(ecran):
 
+    player_pseudo = ""
 
     running_menu  = True
     running_input = False
@@ -53,7 +53,7 @@ def menu(ecran):
     ennemi_image.set_colorkey((255, 255, 255), RLEACCEL)
     ennemi_rect = ennemi_image.get_rect(center=(760, 420))
     
-    # Boucle principale
+    # Menu principal
     while running_menu:
         
         ecran.fill("#222023") # Couleur de fond
@@ -108,12 +108,12 @@ def menu(ecran):
                 inputbox.handle_event_key(event)
                 if inputbox.entrer:
                     if inputbox.text != "":
+                        player_pseudo = inputbox.get_text()
                         running_input = False
                         break
                     else:
                         new_texte = "Le pseudo ne peut être vide"
                         inputbox.new_texte(new_texte)
-                        inputbox.new_texte("")
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 inputbox.handle_event_mouse(event, recto)
 
@@ -123,3 +123,4 @@ def menu(ecran):
             ecran.blit(inputbox.txt_surface, inputbox.rect)
             pygame.display.flip()
 
+    return player_pseudo
