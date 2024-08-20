@@ -6,6 +6,7 @@ from bouclier import Bouclier
 from explosion import Explosion
 from vie import Vie
 from menu import menu
+from inputBox import InputBox
 import random
 
 # Initialisation de Pygame
