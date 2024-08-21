@@ -10,8 +10,7 @@ Space invaders | Python3 | Pygame
 Ce projet s'inspire du jeu d'arcade emblématique des années 70 : Space Invaders. Le joueur incarne un pilote de vaisseau spatial, chargé de se défendre contre des vagues d'aliens envahisseurs. Le but est simple : détruire le maximum d'ennemis tout en protégeant son vaisseau à l'aide des bonus de vie et des boucliers.
 
 
-<img src="/images/github_menu.jpg" width="300" height="240" />
-<img src="/images/github_jouer.jpg" width="300" height="240"/>
+<img src="/images/github_menu.jpg" width="300" height="240" /> <img src="/images/github_jouer.jpg" width="300" height="240"/>
 
 ## Comment jouer
 
