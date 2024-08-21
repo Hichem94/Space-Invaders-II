@@ -21,6 +21,12 @@ cd SpaceInvadersII
 python3 main.py
 ```
 
+## A faire
+
+- Création de niveaux
+- Différents ennemis
+- Combats finals contre boss
+
 ## Message
 
 Merci d'avoir découvert mon jeu, j'espère qu'il vous plaira !
