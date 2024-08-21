@@ -36,7 +36,7 @@ def afficher_titre(ecran):
     
 
 
-def menu(ecran, running_game_over, score):
+def menu(ecran, running_game_over, score, menu_sound):
 
     player_pseudo = ""
 
@@ -96,14 +96,17 @@ def menu(ecran, running_game_over, score):
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_1:   # JOUER
+                        menu_sound.play()
                         running_menu = False
                         running_input = True
                         break
                     if event.key == pygame.K_2:   # SCORE
+                        menu_sound.play()
                         running_menu = False
                         running_score = True
                         break
                     if event.key == pygame.K_3:   # QUITTER
+                        menu_sound.play()
                         running_menu = False
                         pygame.quit()
                         sys.exit()                
@@ -150,7 +153,6 @@ def menu(ecran, running_game_over, score):
             #ecran.fill("#222023") # Couleur de fond
             background_group_a.draw(ecran)
 
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running_menu  = False
@@ -160,6 +162,7 @@ def menu(ecran, running_game_over, score):
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
+                        menu_sound.play()
                         running_score = False
                         running_menu  = True
 
@@ -211,6 +214,7 @@ def menu(ecran, running_game_over, score):
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
+                        menu_sound.play()
                         running_game_over = False
                         running_menu      = True
 

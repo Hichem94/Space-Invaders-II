@@ -129,5 +129,7 @@ class Vaisseau(pygame.sprite.Sprite):
             ecran.blit(bouclier_image, bouclier_rect)
             
 
-        
+    def kill_missile(self):
+        for missile in self.missiles:
+            missile.kill()
             

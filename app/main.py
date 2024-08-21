@@ -12,6 +12,15 @@ import random
 # Initialisation de Pygame
 pygame.init()
 
+# Sounds
+pygame.mixer.init()
+shoot_sound     = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/shoot.wav")
+explosion_sound = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/explosion.wav")
+explosion_sound.set_volume(0.3)
+bonus_sound     = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/bonus.wav")
+menu_sound      = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/menu.mp3")
+game_over_sound = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/game_over.wav")
+music           = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/music.mpeg")
 
 # Dimensions de la fenêtre
 largeur_ecran, hauteur_ecran = 1000, 800
@@ -33,34 +42,36 @@ WHITE = (255, 255, 255)
 
 clock = pygame.time.Clock()
 
-
-# Background
-background_group = pygame.sprite.Group()
-background_ready = True
-temps_nouveau_background = 300
-temps_depart_background = 0
-
-# Vaisseau
-vaisseau = Vaisseau()
-tous_les_sprites = pygame.sprite.Group(vaisseau)
-
-# Ennemis
-ennemi_group = pygame.sprite.Group()
-temps_nouvel_ennemi = 600
-temps_depart_ennemi = pygame.time.get_ticks()
-
-# Bouclier
-bouclier_group = pygame.sprite.Group()
-temps_nouveau_bouclier = random.randint(1000, 3000)
-temps_depart_bouclier = pygame.time.get_ticks()
-
-# Vie
-vie_group = pygame.sprite.Group()
-temps_nouvelle_vie = random.randint(1000, 3000)
-temps_depart_vie = pygame.time.get_ticks()
-
 while True:
-    player_pseudo = menu(ecran, running_game_over, score)
+
+    # Background
+    background_group = pygame.sprite.Group()
+    background_ready = True
+    temps_nouveau_background = 300
+    temps_depart_background = 0
+
+    # Vaisseau
+    vaisseau = Vaisseau()
+    tous_les_sprites = pygame.sprite.Group(vaisseau)
+
+    # Ennemis
+    ennemi_group = pygame.sprite.Group()
+    temps_nouvel_ennemi = 600
+    temps_depart_ennemi = pygame.time.get_ticks()
+
+    # Bouclier
+    bouclier_group = pygame.sprite.Group()
+    temps_nouveau_bouclier = random.randint(1000, 3000)
+    temps_depart_bouclier = pygame.time.get_ticks()
+
+    # Vie
+    vie_group = pygame.sprite.Group()
+    temps_nouvelle_vie = random.randint(1000, 3000)
+    temps_depart_vie = pygame.time.get_ticks()
+
+
+    music.play(-1)
+    player_pseudo = menu(ecran, running_game_over, score, menu_sound)
     running_game_over = False
     # Boucle principale
     running = True
@@ -123,6 +134,7 @@ while True:
             if ennemis_touches:
                 explosion = Explosion(missile.rect.center)
                 tous_les_sprites.add(explosion)
+                explosion_sound.play()
                 score += len(ennemis_touches)
                 missile.kill()
 
@@ -138,22 +150,29 @@ while True:
             if not vaisseau.get_vies():
                 explosion2 = Explosion(vaisseau.rect.center)
                 tous_les_sprites.add(explosion2)
-                running = False          # Termine la partie
+                game_over_sound.play()
+                running = False         # Termine la partie
                 running_game_over = True # Pour l'affichage de la page game over
+                vaisseau.kill_missile()
+                for sprite in tous_les_sprites:
+                    sprite.kill()
+                score = 0
+                break
 
 
         # Collision Vaisseau+Bouclier / Ennemi
         if pygame.sprite.spritecollide(vaisseau, ennemi_group, True) and vaisseau.bouclier_active:
-            pass
+            explosion_sound.play()
 
         # Collision Vaisseau / Bouclier
         if pygame.sprite.spritecollide(vaisseau, bouclier_group, True):
+            bonus_sound.play()
             vaisseau.armor()
         
         # Collision Vaisseau / Vie
         if pygame.sprite.spritecollide(vaisseau, vie_group, True):
+            bonus_sound.play()
             vaisseau.add_vie()
-
 
         # Met à jour tous les sprites
         tous_les_sprites.update()
@@ -171,7 +190,7 @@ while True:
 
         pygame.display.update()
 
-    pygame.time.delay(1000)
+    pygame.time.delay(2000)
 
     if player_pseudo and score:
         db.ajouter_player_et_score(player_pseudo, score)
