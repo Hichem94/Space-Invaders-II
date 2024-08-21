@@ -2,11 +2,13 @@ import pygame
 import sys
 from pygame import *
 from inputBox import InputBox
+from background import Background
 
 # Définir les couleurs
 WHITE  = (255, 255, 255)
 YELLOW = (255, 255, 0)
 RED    = (255, 0, 0)
+
 
 # Gestion de la police
 def gestion_texte(ecran, texte, couleur, police, taille, position):
@@ -37,6 +39,12 @@ def menu(ecran):
 
     player_pseudo = ""
 
+    largeur_ecran, hauteur_ecran = pygame.display.get_surface().get_size()
+    bgd_a = Background("/home/rigolo/SpaceInvaderII/images/invaders.png", largeur_ecran, hauteur_ecran, 0, 0)
+    background_group_a = pygame.sprite.GroupSingle(bgd_a)
+    # bgd_b = Background("/home/rigolo/SpaceInvaderII/images/feuille.png", 600, 500, 300, 300)
+    # background_group_b = pygame.sprite.GroupSingle(bgd_b)
+
     running_menu  = True
     running_input = False
     running_score = False 
@@ -53,74 +61,127 @@ def menu(ecran):
     ennemi_image.set_colorkey((255, 255, 255), RLEACCEL)
     ennemi_rect = ennemi_image.get_rect(center=(760, 420))
     
-    # Menu principal
-    while running_menu:
-        
-        ecran.fill("#222023") # Couleur de fond
+    while True:
 
-        ecran.blit(vaisseau_image, vaisseau_rect)
-        ecran.blit(ennemi_image, ennemi_rect)
-        
-        afficher_titre(ecran)
+        # Menu principal
+        while running_menu:
+            
+            #ecran.fill("#222023") # Couleur de fond
+            background_group_a.draw(ecran)
 
-        gestion_texte(ecran, "JOUER       1", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 350))
-        gestion_texte(ecran, "SCORES    2", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 400))
-        gestion_texte(ecran, "QUITTER 3", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 450))
+            ecran.blit(vaisseau_image, vaisseau_rect)
+            ecran.blit(ennemi_image, ennemi_rect)
+            
+            afficher_titre(ecran)
 
-        instructions  = "Utiliser les fleches directionnelles de votre clavier pour piloter votre vaisseau spatial."
-        gestion_texte(ecran, instructions, WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (60, 600))
-        instructions = "Appuyer sur la touche espace pour tirer sur vos ennemis. A vous de jouer !"
-        gestion_texte(ecran, instructions, WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (90, 620))
+            gestion_texte(ecran, "JOUER       1", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 350))
+            gestion_texte(ecran, "SCORES    2", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 400))
+            gestion_texte(ecran, "QUITTER 3", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 450))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running_menu = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:   # JOUER
-                    running_menu = False
-                    running_input = True
-                    break
-                if event.key == pygame.K_2:   # SCORE
-                    running_menu = False
-                    running_score = True
-                    break
-                if event.key == pygame.K_3:   # QUITTER
-                    running_menu = False
+            instructions  = "Utiliser les fleches directionnelles de votre clavier pour piloter votre vaisseau spatial."
+            gestion_texte(ecran, instructions, WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (60, 600))
+            instructions = "Appuyer sur la touche espace pour tirer sur vos ennemis. A vous de jouer !"
+            gestion_texte(ecran, instructions, WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (90, 620))
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running_menu  = False
+                    running_input = False
+                    running_score = False
                     pygame.quit()
-                    sys.exit()                
-
-        pygame.display.flip()
-
-
-
-    # Entrer le pseudo    
-    pygame.display.flip()
-    inputbox = InputBox(380,380,100,100)
-    recto = pygame.Rect(250, 350, 500, 100) # Rectangle autour de la zone de texte
-    while running_input:
-        ecran.fill("#222023") # Couleur de fond
-        afficher_titre(ecran)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                break
-            elif event.type == pygame.KEYDOWN:
-                inputbox.handle_event_key(event)
-                if inputbox.entrer:
-                    if inputbox.text != "":
-                        player_pseudo = inputbox.get_text()
-                        running_input = False
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_1:   # JOUER
+                        running_menu = False
+                        running_input = True
                         break
-                    else:
-                        new_texte = "Le pseudo ne peut être vide"
-                        inputbox.new_texte(new_texte)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                inputbox.handle_event_mouse(event, recto)
+                    if event.key == pygame.K_2:   # SCORE
+                        running_menu = False
+                        running_score = True
+                        break
+                    if event.key == pygame.K_3:   # QUITTER
+                        running_menu = False
+                        pygame.quit()
+                        sys.exit()                
 
-            # Dessiner le rectangle
-            pygame.draw.rect(ecran, (255,255,255), recto,  2)
-            # Input
-            ecran.blit(inputbox.txt_surface, inputbox.rect)
             pygame.display.flip()
+
+
+
+        # Entrer le pseudo    
+        pygame.display.flip()
+        inputbox = InputBox(380,380,100,100)
+        recto = pygame.Rect(250, 350, 500, 100) # Rectangle autour de la zone de texte
+        while running_input:
+            #ecran.fill("#222023") # Couleur de fond
+            background_group_a.draw(ecran)
+            
+            afficher_titre(ecran)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    break
+                elif event.type == pygame.KEYDOWN:
+                    inputbox.handle_event_key(event)
+                    if inputbox.entrer:
+                        if inputbox.text != "":
+                            player_pseudo = inputbox.get_text()
+                            running_input = False
+                            break
+                        else:
+                            new_texte = "Le pseudo ne peut être vide"
+                            inputbox.new_texte(new_texte)
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    inputbox.handle_event_mouse(event, recto)
+
+                # Dessiner le rectangle
+                pygame.draw.rect(ecran, (255,255,255), recto,  2)
+                # Input
+                ecran.blit(inputbox.txt_surface, inputbox.rect)
+                pygame.display.flip()
+
+
+        # Tableau des scores
+        while running_score:
+            #ecran.fill("#222023") # Couleur de fond
+            background_group_a.draw(ecran)
+
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running_menu  = False
+                    running_input = False
+                    running_score = False
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        running_score = False
+                        running_menu  = True
+
+            # Ecrire HIGH SCORES
+            gestion_texte(ecran, "H", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (270, 200))
+            gestion_texte(ecran, "I", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (320, 200))
+            gestion_texte(ecran, "GH", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (350, 200))
+            gestion_texte(ecran, " SC", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (450, 200))
+            gestion_texte(ecran, "O", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (623, 200))
+            gestion_texte(ecran, "R", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (655, 200))
+            gestion_texte(ecran, "E", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (705, 200))
+            gestion_texte(ecran, "S", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (730, 200))
+            
+            # Ecrire 1. 2. 3. 4. 5.
+            gestion_texte(ecran, "1. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 350))
+            gestion_texte(ecran, "2. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 390))
+            gestion_texte(ecran, "3. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 430))
+            gestion_texte(ecran, "4. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 470))
+            gestion_texte(ecran, "5. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 510))
+            
+            
+            pygame.display.flip()
+
+
+
+
 
     return player_pseudo

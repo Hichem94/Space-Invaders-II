@@ -76,7 +76,7 @@ while running:
     # Gestion du background
     current_time = pygame.time.get_ticks()
     if current_time - temps_depart_background > temps_nouveau_background:
-        bground = Background(largeur_ecran, hauteur_ecran)
+        bground = Background("/home/rigolo/SpaceInvaderII/images/background_star_yellow.png", 30, 30, largeur_ecran, hauteur_ecran)
         background_group.add(bground)
         tous_les_sprites.add(bground)
         temps_depart_background = current_time   
@@ -87,7 +87,7 @@ while running:
     vaisseau.handle_mouvement(keys, largeur_ecran, hauteur_ecran)
 
     # Tirer un missile avec la touche Espace    
-    if keys[pygame.K_SPACE]:        
+    if keys[pygame.K_SPACE]:
         vaisseau.shoot_missile(largeur_ecran)
 
     # Génère un ennemi toutes les 0.6 secondes
