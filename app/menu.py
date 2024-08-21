@@ -36,7 +36,7 @@ def afficher_titre(ecran):
     
 
 
-def menu(ecran):
+def menu(ecran, running_game_over, score):
 
     player_pseudo = ""
 
@@ -46,9 +46,12 @@ def menu(ecran):
     # bgd_b = Background("/home/rigolo/SpaceInvaderII/images/feuille.png", 600, 500, 300, 300)
     # background_group_b = pygame.sprite.GroupSingle(bgd_b)
 
-    running_menu  = True
+    if running_game_over:
+        running_menu  = False
+    else:
+        running_menu = True
     running_input = False
-    running_score = False 
+    running_score = False
 
     # Image du vaisseau
     vaisseau_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/vaisseau.png").convert_alpha()
@@ -142,7 +145,7 @@ def menu(ecran):
                 pygame.display.flip()
 
 
-        # Tableau des scores
+        # Scores
         while running_score:
             #ecran.fill("#222023") # Couleur de fond
             background_group_a.draw(ecran)
@@ -188,9 +191,40 @@ def menu(ecran):
                 gestion_texte(ecran, s, WHITE, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (440, y))
                 y += 40
 
+            # Afficher "Appuyer sur espace pour quitter."
+            gestion_texte(ecran, "Appuyer sur espace pour quitter.", WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (340, 700))
+
             pygame.display.flip()
         
-        if not running_menu and not running_input and not running_score:
+
+        # Game over
+        while running_game_over:
+            background_group_a.draw(ecran)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running_menu      = False
+                    running_input     = False
+                    running_score     = False
+                    running_game_over = False
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        running_game_over = False
+                        running_menu      = True
+
+            # Afficher GAME OVER
+            s = "SCORE : " + str(score)
+            gestion_texte(ecran, "GAME OVER", RED, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (270, 200))
+            gestion_texte(ecran, s, YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 350))
+
+            # Afficher "Appuyer sur espace pour quitter."
+            gestion_texte(ecran, "Appuyer sur espace pour quitter.", WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (340, 550))
+
+            pygame.display.flip()
+
+        if not running_menu and not running_input and not running_score and not running_game_over:
             break
     
     return player_pseudo
