@@ -61,12 +61,12 @@ while True:
 
     # Bouclier
     bouclier_group = pygame.sprite.Group()
-    temps_nouveau_bouclier = random.randint(1000, 3000)
+    temps_nouveau_bouclier = random.randint(10000, 20000)
     temps_depart_bouclier = pygame.time.get_ticks()
 
     # Vie
     vie_group = pygame.sprite.Group()
-    temps_nouvelle_vie = random.randint(1000, 3000)
+    temps_nouvelle_vie = random.randint(10000, 20000)
     temps_depart_vie = pygame.time.get_ticks()
 
 
