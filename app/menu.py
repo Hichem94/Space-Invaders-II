@@ -3,6 +3,7 @@ import sys
 from pygame import *
 from inputBox import InputBox
 from background import Background
+import database as db
 
 # Définir les couleurs
 WHITE  = (255, 255, 255)
@@ -128,7 +129,6 @@ def menu(ecran):
                         if inputbox.text != "":
                             player_pseudo = inputbox.get_text()
                             running_input = False
-                            break
                         else:
                             new_texte = "Le pseudo ne peut être vide"
                             inputbox.new_texte(new_texte)
@@ -160,7 +160,7 @@ def menu(ecran):
                         running_score = False
                         running_menu  = True
 
-            # Ecrire HIGH SCORES
+            # Afficher HIGH SCORES
             gestion_texte(ecran, "H", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (270, 200))
             gestion_texte(ecran, "I", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (320, 200))
             gestion_texte(ecran, "GH", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (350, 200))
@@ -170,18 +170,27 @@ def menu(ecran):
             gestion_texte(ecran, "E", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (705, 200))
             gestion_texte(ecran, "S", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (730, 200))
             
-            # Ecrire 1. 2. 3. 4. 5.
-            gestion_texte(ecran, "1. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 350))
-            gestion_texte(ecran, "2. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 390))
-            gestion_texte(ecran, "3. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 430))
-            gestion_texte(ecran, "4. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 470))
-            gestion_texte(ecran, "5. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Minecraft.ttf', 40, (420, 510))
+            # Afficher 1. 2. 3. 4. 5.
+            gestion_texte(ecran, "1. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 350))
+            gestion_texte(ecran, "2. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 390))
+            gestion_texte(ecran, "3. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 430))
+            gestion_texte(ecran, "4. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 470))
+            gestion_texte(ecran, "5. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 510))
             
-            
+            # Afficher player et score
+            scores = db.best_scores()
+            #print(scores)
+            y = 350
+            for t in scores:
+                pseudo = t[0]
+                score  = t[1]
+                s      = pseudo + " (" + str(score) + ")"
+                gestion_texte(ecran, s, WHITE, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (440, y))
+                y += 40
+
             pygame.display.flip()
-
-
-
-
-
+        
+        if not running_menu and not running_input and not running_score:
+            break
+    
     return player_pseudo

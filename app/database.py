@@ -51,6 +51,16 @@ def ajouter_player_et_score(pseudo, score):
                 c.execute(insert_score)
                 db.commit()
 
-# ajouter_player_et_score('rigolo', 100)
-# ajouter_player_et_score('rigolo', 100)
-# ajouter_player_et_score('poussin', 102)
+def best_scores():
+    query = "SELECT p.pseudo, s.score\
+             FROM player p, score s\
+             WHERE p.id = s.player_id\
+             ORDER BY s.score DESC"
+    
+    with mysql.connector.connect(**connection_params) as db:
+        with db.cursor(buffered=True) as c:
+            c.execute("USE space_invadersII")
+            c.execute(query)
+    return c.fetchmany(5)
+
+
