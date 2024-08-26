@@ -72,7 +72,9 @@ while True:
 
     music.play(-1)
     player_pseudo = menu(ecran, running_game_over, score, menu_sound)
+    score = 0
     running_game_over = False
+    
     # Boucle principale
     running = True
     while running:
@@ -151,12 +153,16 @@ while True:
                 explosion2 = Explosion(vaisseau.rect.center)
                 tous_les_sprites.add(explosion2)
                 game_over_sound.play()
+                
                 running = False         # Termine la partie
                 running_game_over = True # Pour l'affichage de la page game over
+                
+                # Ménage
                 vaisseau.kill_missile()
                 for sprite in tous_les_sprites:
                     sprite.kill()
-                score = 0
+                #score = 0
+                pygame.time.delay(2000)
                 break
 
 
@@ -189,8 +195,6 @@ while True:
         ecran.blit(score_text, (largeur_ecran-150, 10))
 
         pygame.display.update()
-
-    pygame.time.delay(2000)
 
     if player_pseudo and score:
         db.ajouter_player_et_score(player_pseudo, score)

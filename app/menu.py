@@ -115,7 +115,7 @@ def menu(ecran, running_game_over, score, menu_sound):
 
 
 
-        # Entrer le pseudo    
+        # Pas Entrer le pseudo    
         pygame.display.flip()
         inputbox = InputBox(380,380,100,100)
         recto = pygame.Rect(250, 350, 500, 100) # Rectangle autour de la zone de texte
@@ -148,7 +148,7 @@ def menu(ecran, running_game_over, score, menu_sound):
                 pygame.display.flip()
 
 
-        # Scores
+        # Page des scores
         while running_score:
             #ecran.fill("#222023") # Couleur de fond
             background_group_a.draw(ecran)
@@ -200,7 +200,7 @@ def menu(ecran, running_game_over, score, menu_sound):
             pygame.display.flip()
         
 
-        # Game over
+        # Page Game over
         while running_game_over:
             background_group_a.draw(ecran)
 
