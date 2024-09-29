@@ -6,7 +6,7 @@ from vie import Vie
 class Vaisseau(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/vaisseau.png").convert_alpha()
+        self.image = pygame.image.load("images/vaisseau.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (70, 50))
         self.image.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.image.get_rect()
@@ -121,7 +121,7 @@ class Vaisseau(pygame.sprite.Sprite):
         self.groupe_vie.draw(ecran)
         # Dessiner le bouclier autour du vaisseau s'il est actif
         if self.bouclier_active:
-            bouclier_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/bubble.png").convert_alpha()
+            bouclier_image = pygame.image.load("/images/bubble.png").convert_alpha()
             bouclier_image = pygame.transform.scale(bouclier_image, (80, 70))
             bouclier_image.set_colorkey((255, 255, 255), RLEACCEL)
             bouclier_rect = bouclier_image.get_rect()

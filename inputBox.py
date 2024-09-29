@@ -6,7 +6,7 @@ class InputBox(pygame.sprite.Sprite):
 
     def __init__(self, x, y, w, h, text='Entrer un pseudo'):
         self.rect = pygame.Rect(x, y, w, h)
-        self.font = pygame.font.SysFont('/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 40)
+        self.font = pygame.font.SysFont('police/Neuropol.otf', 40)
         self.color = pygame.Color('white')
         self.txt_surface = self.font.render(text, True, self.color)
         self.entrer = False
@@ -17,7 +17,7 @@ class InputBox(pygame.sprite.Sprite):
         if not self.first_key:
             self.text = ""
             self.first_key = True
-        self.font = pygame.font.SysFont('/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 40)
+        self.font = pygame.font.SysFont('police/Neuropol.otf', 40)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 self.entrer = True
@@ -35,7 +35,7 @@ class InputBox(pygame.sprite.Sprite):
         self.txt_surface = self.font.render(self.text, True, self.color)
 
     def new_texte(self, new_text):
-        self.font = pygame.font.SysFont('/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 30)
+        self.font = pygame.font.SysFont('police/Neuropol.otf', 30)
         self.text = new_text
         self.txt_surface = self.font.render(self.text, True, self.color)
 

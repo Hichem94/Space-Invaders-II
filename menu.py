@@ -20,18 +20,18 @@ def gestion_texte(ecran, texte, couleur, police, taille, position):
 
 def afficher_titre(ecran):
 
-    gestion_texte(ecran, "SP", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (150, 200))
-    gestion_texte(ecran, "A", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (270, 200))
-    gestion_texte(ecran, "C", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (305, 200))
-    gestion_texte(ecran, "E", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (355, 200))
-    gestion_texte(ecran, " INV", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (400, 200))
-    gestion_texte(ecran, "A", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (547, 200))
-    gestion_texte(ecran, "D", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (580, 200))
-    gestion_texte(ecran, "E", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (630, 200))
-    gestion_texte(ecran, "RS", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (660, 200))
-    gestion_texte(ecran, "II", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (780, 200))
+    gestion_texte(ecran, "SP", YELLOW, 'police/Game_Of_Squids.otf', 80, (150, 200))
+    gestion_texte(ecran, "A", RED, 'police/Thelamonblack.ttf', 80, (270, 200))
+    gestion_texte(ecran, "C", YELLOW, 'police/Game_Of_Squids.otf', 80, (305, 200))
+    gestion_texte(ecran, "E", RED, 'police/Thelamonblack.ttf', 80, (355, 200))
+    gestion_texte(ecran, " INV", YELLOW, 'police/Game_Of_Squids.otf', 80, (400, 200))
+    gestion_texte(ecran, "A", RED, 'police/Thelamonblack.ttf', 80, (547, 200))
+    gestion_texte(ecran, "D", YELLOW, 'police/Game_Of_Squids.otf', 80, (580, 200))
+    gestion_texte(ecran, "E", RED, 'police/Thelamonblack.ttf', 80, (630, 200))
+    gestion_texte(ecran, "RS", YELLOW, 'police/Game_Of_Squids.otf', 80, (660, 200))
+    gestion_texte(ecran, "II", RED, 'police/Thelamonblack.ttf', 80, (780, 200))
 
-    gestion_texte(ecran, "They are back !", WHITE, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 50, (600, 270))
+    gestion_texte(ecran, "They are back !", WHITE, 'police/Thelamonblack.ttf', 50, (600, 270))
 
     
 
@@ -41,9 +41,9 @@ def menu(ecran, running_game_over, score, menu_sound):
     player_pseudo = ""
 
     largeur_ecran, hauteur_ecran = pygame.display.get_surface().get_size()
-    bgd_a = Background("/home/rigolo/SpaceInvaderII/images/invaders.png", largeur_ecran, hauteur_ecran, 0, 0)
+    bgd_a = Background("images/invaders.png", largeur_ecran, hauteur_ecran, 0, 0)
     background_group_a = pygame.sprite.GroupSingle(bgd_a)
-    # bgd_b = Background("/home/rigolo/SpaceInvaderII/images/feuille.png", 600, 500, 300, 300)
+    # bgd_b = Background("images/feuille.png", 600, 500, 300, 300)
     # background_group_b = pygame.sprite.GroupSingle(bgd_b)
 
     if running_game_over:
@@ -54,13 +54,13 @@ def menu(ecran, running_game_over, score, menu_sound):
     running_score = False
 
     # Image du vaisseau
-    vaisseau_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/vaisseau.png").convert_alpha()
+    vaisseau_image = pygame.image.load("images/vaisseau.png").convert_alpha()
     vaisseau_image = pygame.transform.scale(vaisseau_image, (300, 300))
     vaisseau_image.set_colorkey((255, 255, 255), RLEACCEL)
     vaisseau_rect = vaisseau_image.get_rect(center=(200, 420))
 
     # Image ennemi
-    ennemi_image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/ennemi.png").convert_alpha()
+    ennemi_image = pygame.image.load("images/ennemi.png").convert_alpha()
     ennemi_image = pygame.transform.scale(ennemi_image, (200, 200))
     ennemi_image.set_colorkey((255, 255, 255), RLEACCEL)
     ennemi_rect = ennemi_image.get_rect(center=(760, 420))
@@ -78,14 +78,14 @@ def menu(ecran, running_game_over, score, menu_sound):
             
             afficher_titre(ecran)
 
-            gestion_texte(ecran, "JOUER       1", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 350))
-            gestion_texte(ecran, "SCORES    2", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 400))
-            gestion_texte(ecran, "QUITTER 3", WHITE, '/home/rigolo/SpaceInvaderII/police/Deep_Shadow.ttf', 30, (350, 450))
+            gestion_texte(ecran, "JOUER       1", WHITE, 'police/Deep_Shadow.ttf', 30, (350, 350))
+            gestion_texte(ecran, "SCORES    2", WHITE, 'police/Deep_Shadow.ttf', 30, (350, 400))
+            gestion_texte(ecran, "QUITTER 3", WHITE, 'police/Deep_Shadow.ttf', 30, (350, 450))
 
             instructions  = "Utiliser les fleches directionnelles de votre clavier pour piloter votre vaisseau spatial."
-            gestion_texte(ecran, instructions, WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (60, 600))
+            gestion_texte(ecran, instructions, WHITE, 'police/Neuropol.otf', 16, (60, 600))
             instructions = "Appuyer sur la touche espace pour tirer sur vos ennemis. A vous de jouer !"
-            gestion_texte(ecran, instructions, WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (90, 620))
+            gestion_texte(ecran, instructions, WHITE, 'police/Neuropol.otf', 16, (90, 620))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -167,21 +167,21 @@ def menu(ecran, running_game_over, score, menu_sound):
                         running_menu  = True
 
             # Afficher HIGH SCORES
-            gestion_texte(ecran, "H", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (270, 200))
-            gestion_texte(ecran, "I", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (320, 200))
-            gestion_texte(ecran, "GH", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (350, 200))
-            gestion_texte(ecran, " SC", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (450, 200))
-            gestion_texte(ecran, "O", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (623, 200))
-            gestion_texte(ecran, "R", YELLOW, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (655, 200))
-            gestion_texte(ecran, "E", RED, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (705, 200))
-            gestion_texte(ecran, "S", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 80, (730, 200))
+            gestion_texte(ecran, "H", YELLOW, 'police/Game_Of_Squids.otf', 80, (270, 200))
+            gestion_texte(ecran, "I", RED, 'police/Thelamonblack.ttf', 80, (320, 200))
+            gestion_texte(ecran, "GH", YELLOW, 'police/Game_Of_Squids.otf', 80, (350, 200))
+            gestion_texte(ecran, " SC", YELLOW, 'police/Game_Of_Squids.otf', 80, (450, 200))
+            gestion_texte(ecran, "O", RED, 'police/Thelamonblack.ttf', 80, (623, 200))
+            gestion_texte(ecran, "R", YELLOW, 'police/Game_Of_Squids.otf', 80, (655, 200))
+            gestion_texte(ecran, "E", RED, 'police/Thelamonblack.ttf', 80, (705, 200))
+            gestion_texte(ecran, "S", YELLOW, 'police/Thelamonblack.ttf', 80, (730, 200))
             
             # Afficher 1. 2. 3. 4. 5.
-            gestion_texte(ecran, "1. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 350))
-            gestion_texte(ecran, "2. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 390))
-            gestion_texte(ecran, "3. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 430))
-            gestion_texte(ecran, "4. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 470))
-            gestion_texte(ecran, "5. ", YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 510))
+            gestion_texte(ecran, "1. ", YELLOW, 'police/Thelamonblack.ttf', 60, (390, 350))
+            gestion_texte(ecran, "2. ", YELLOW, 'police/Thelamonblack.ttf', 60, (390, 390))
+            gestion_texte(ecran, "3. ", YELLOW, 'police/Thelamonblack.ttf', 60, (390, 430))
+            gestion_texte(ecran, "4. ", YELLOW, 'police/Thelamonblack.ttf', 60, (390, 470))
+            gestion_texte(ecran, "5. ", YELLOW, 'police/Thelamonblack.ttf', 60, (390, 510))
             
             # Afficher player et score
             scores = db.best_scores()
@@ -191,11 +191,11 @@ def menu(ecran, running_game_over, score, menu_sound):
                 pseudo = t[0]
                 score  = t[1]
                 s      = pseudo + " (" + str(score) + ")"
-                gestion_texte(ecran, s, WHITE, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (440, y))
+                gestion_texte(ecran, s, WHITE, 'police/Thelamonblack.ttf', 60, (440, y))
                 y += 40
 
             # Afficher "Appuyer sur espace pour quitter."
-            gestion_texte(ecran, "Appuyer sur espace pour quitter.", WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (340, 700))
+            gestion_texte(ecran, "Appuyer sur espace pour quitter.", WHITE, 'police/Neuropol.otf', 16, (340, 700))
 
             pygame.display.flip()
         
@@ -220,11 +220,11 @@ def menu(ecran, running_game_over, score, menu_sound):
 
             # Afficher GAME OVER
             s = "SCORE : " + str(score)
-            gestion_texte(ecran, "GAME OVER", RED, '/home/rigolo/SpaceInvaderII/police/Game_Of_Squids.otf', 80, (270, 200))
-            gestion_texte(ecran, s, YELLOW, '/home/rigolo/SpaceInvaderII/police/Thelamonblack.ttf', 60, (390, 350))
+            gestion_texte(ecran, "GAME OVER", RED, 'police/Game_Of_Squids.otf', 80, (270, 200))
+            gestion_texte(ecran, s, YELLOW, 'police/Thelamonblack.ttf', 60, (390, 350))
 
             # Afficher "Appuyer sur espace pour quitter."
-            gestion_texte(ecran, "Appuyer sur espace pour quitter.", WHITE, '/home/rigolo/SpaceInvaderII/police/Neuropol.otf', 16, (340, 550))
+            gestion_texte(ecran, "Appuyer sur espace pour quitter.", WHITE, 'police/Neuropol.otf', 16, (340, 550))
 
             pygame.display.flip()
 

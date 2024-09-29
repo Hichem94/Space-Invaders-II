@@ -5,7 +5,7 @@ import random
 class Vie(pygame.sprite.Sprite):
     def __init__(self, zone_interdite, largeur_ecran, hauteur_ecran):
         super().__init__()
-        self.image = pygame.image.load("/home/rigolo/SpaceInvaderII/images/coeur.png").convert_alpha()
+        self.image = pygame.image.load("images/coeur.png").convert_alpha()
         self.image = pygame.transform.scale(self.image, (60, 50))
         self.image.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.image.get_rect()

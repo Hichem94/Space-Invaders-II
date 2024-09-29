@@ -14,13 +14,13 @@ pygame.init()
 
 # Sounds
 pygame.mixer.init()
-shoot_sound     = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/shoot.wav")
-explosion_sound = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/explosion.wav")
+shoot_sound     = pygame.mixer.Sound("sounds/shoot.wav")
+explosion_sound = pygame.mixer.Sound("sounds/explosion.wav")
 explosion_sound.set_volume(0.3)
-bonus_sound     = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/bonus.wav")
-menu_sound      = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/menu.mp3")
-game_over_sound = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/game_over.wav")
-music           = pygame.mixer.Sound("/home/rigolo/SpaceInvaderII/sounds/music.mpeg")
+bonus_sound     = pygame.mixer.Sound("sounds/bonus.wav")
+menu_sound      = pygame.mixer.Sound("sounds/menu.mp3")
+game_over_sound = pygame.mixer.Sound("sounds/game_over.wav")
+music           = pygame.mixer.Sound("sounds/music.mpeg")
 
 # Dimensions de la fenêtre
 largeur_ecran, hauteur_ecran = 1000, 800
@@ -92,7 +92,7 @@ while True:
         # Gestion du background
         current_time = pygame.time.get_ticks()
         if current_time - temps_depart_background > temps_nouveau_background:
-            bground = Background("/home/rigolo/SpaceInvaderII/images/background_star_yellow.png", 30, 30, largeur_ecran, hauteur_ecran)
+            bground = Background("images/background_star_yellow.png", 30, 30, largeur_ecran, hauteur_ecran)
             background_group.add(bground)
             tous_les_sprites.add(bground)
             temps_depart_background = current_time   
