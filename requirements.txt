@@ -1,2 +1,2 @@
 pygame
-mysql-server
+mysql-connector-python
